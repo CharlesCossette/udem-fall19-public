@@ -1,7 +1,7 @@
 import random
 import math
 import matplotlib.pyplot as plt
-
+import numpy as np
 
 class RRT_planner:
     """
@@ -44,7 +44,7 @@ class RRT_planner:
         self.list_nodes = []
 
     def plan(self, show_anim=True):
-        """
+        """s
         Returns the path from goal to start.
         show_anim: flag for show_anim on or off
         """
@@ -55,8 +55,37 @@ class RRT_planner:
             ####### 
             # Objective: create a valid new_node according to the RRT algorithm and append it to "self.list_nodes"
             # You can call any of the functions defined lower, or add your own.
-
-            # YOUR CODE HERE
+            
+            # Generate a random node
+            randomNode = self.get_random_node()
+            
+            # Get closest node index
+            closestNodeID = self.get_closest_node_id(self.list_nodes,randomNode)
+            
+            # Extract actual closest node object
+            closestNode = self.list_nodes[closestNodeID]           
+            
+            # New node in direction of the path, including path info.
+            new_node = self.extend(closestNode, randomNode)
+            
+            # Check for collision
+            if self.collision(new_node, self.list_obstacles):
+                continue
+            else:
+                self.list_nodes.append(new_node)
+            
+            
+            
+           # dist,angle = self.compute_dist_ang(closestNode, randomNode)
+           # pathNumberSamples = math.floor(dist/self.path_res)
+           # for t in range(pathNumberSamples)
+           #     sampleNode = self.Node(0,0)
+           #     sampleNode.x = closestNode.x + (randomNode.x - closestNode.x)*(t/pathNumberSamples)
+           #     sampleNode.y = closestNode.y + (randomNode.y - closestNode.y)*(t/pathNumberSamples)
+           #     sampleCollisionCheck = self.collision(sampleNode,self.list_obstacles)
+           #     if sampleCollisionCheck = true
+                
+            
 
             #######
 
@@ -191,21 +220,49 @@ class RTT_Path_Follower:
     def __init__(self, path, local_env):
         self.path = path
         self.env = local_env
-    
+        self.curNodeID = len(self.path) # check this.
+        print(self.curNodeID)
     def next_action(self):
         # Current position and angle
         cur_pos_x = self.env.cur_pos[0]
-        cur_pos_y = self.env.cur_pos[2]
+        cur_pos_y = -self.env.cur_pos[2]
         cur_angle = self.env.cur_angle
+        
+        k_p_att = 2
+        attErrorTol = 0.001
+        nodeErrorTol = 0.1
         
         v = 0.
         omega = 0.
         
         #######
-        #
-        # YOUR CODE HERE: change v and omega so that the Duckiebot keeps on following the path
-        #
-        #######
+        r_zo_g = np.array([cur_pos_x,cur_pos_y])
+        r_do_g = np.array([self.path[self.curNodeID-1][0],-self.path[self.curNodeID-1][1]])
+        r_dz_g = r_do_g - r_zo_g
+        C_bg = np.array([[np.cos(cur_angle), np.sin(cur_angle)],[-np.sin(cur_angle), np.cos(cur_angle)]])
+        r_dz_b = C_bg @ np.vstack(r_dz_g)
         
+        
+        nodeError = np.linalg.norm(r_dz_b)
+        
+        if nodeError < 0.001:
+            sinError = 0
+        else:
+            sinError = np.asscalar(r_dz_b[1])/nodeError
+        
+
+        if np.abs(sinError) <= attErrorTol:
+            v = 0.25
+            omega = 0
+        else:
+            v = 0
+            omega = k_p_att*sinError
+        
+        
+        if nodeError < nodeErrorTol:
+            self.curNodeID = self.curNodeID - 1
+        
+        #######
+        print("V: ",v," Att Err: ",sinError, " Node: ", self.curNodeID, " NodeError: ",r_dz_b[0],r_dz_b[1])
         return v, omega
     
