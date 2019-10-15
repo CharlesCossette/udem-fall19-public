@@ -1,0 +1,5 @@
+charles-ros-core/packages/lane_following_PP
+/duckietown/catkin_ws/devel/.private/lane_following_PP/cmake.lock /duckietown/catkin_ws/devel/./cmake.lock
+/duckietown/catkin_ws/devel/.private/lane_following_PP/share/lane_following_PP/cmake/lane_following_PPConfig-version.cmake /duckietown/catkin_ws/devel/share/lane_following_PP/cmake/lane_following_PPConfig-version.cmake
+/duckietown/catkin_ws/devel/.private/lane_following_PP/share/lane_following_PP/cmake/lane_following_PPConfig.cmake /duckietown/catkin_ws/devel/share/lane_following_PP/cmake/lane_following_PPConfig.cmake
+/duckietown/catkin_ws/devel/.private/lane_following_PP/lib/pkgconfig/lane_following_PP.pc /duckietown/catkin_ws/devel/lib/pkgconfig/lane_following_PP.pc

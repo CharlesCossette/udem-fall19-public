@@ -1,0 +1,1 @@
+/duckietown/catkin_ws/devel/.private/pure_pursuit_pkg/share/pure_pursuit_pkg/cmake/pure_pursuit_pkgConfig-version.cmake

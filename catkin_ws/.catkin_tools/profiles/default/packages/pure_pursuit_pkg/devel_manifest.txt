@@ -1,0 +1,5 @@
+charles-ros-core/packages/pure_pursuit_pkg
+/duckietown/catkin_ws/devel/.private/pure_pursuit_pkg/cmake.lock /duckietown/catkin_ws/devel/./cmake.lock
+/duckietown/catkin_ws/devel/.private/pure_pursuit_pkg/share/pure_pursuit_pkg/cmake/pure_pursuit_pkgConfig.cmake /duckietown/catkin_ws/devel/share/pure_pursuit_pkg/cmake/pure_pursuit_pkgConfig.cmake
+/duckietown/catkin_ws/devel/.private/pure_pursuit_pkg/share/pure_pursuit_pkg/cmake/pure_pursuit_pkgConfig-version.cmake /duckietown/catkin_ws/devel/share/pure_pursuit_pkg/cmake/pure_pursuit_pkgConfig-version.cmake
+/duckietown/catkin_ws/devel/.private/pure_pursuit_pkg/lib/pkgconfig/pure_pursuit_pkg.pc /duckietown/catkin_ws/devel/lib/pkgconfig/pure_pursuit_pkg.pc
